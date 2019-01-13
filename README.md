@@ -25,17 +25,13 @@ Create a view files inside `resources/views/lates/tex.blade.php`
 ~~~tex
 \documentclass[a4paper,9pt,landscape]{article}
 
-\usepackage{makecell}
 \usepackage{adjustbox}
 \usepackage[english]{babel}
 \usepackage[scaled=.92]{helvet}
 \usepackage{fancyhdr}
-\usepackage{enumerate}
 \usepackage[svgnames,table]{xcolor}
 \usepackage[a4paper,inner=1.5cm,outer=1.5cm,top=1cm,bottom=1cm,bindingoffset=0cm]{geometry}
-\usepackage{graphicx}
 \usepackage{blindtext}
-% \usepackage{draftwatermark}
 \geometry{textwidth=\paperwidth, textheight=\paperheight, noheadfoot, nomarginpar}
 
 \renewcommand{\familydefault}{\sfdefault}
@@ -46,10 +42,10 @@ Create a view files inside `resources/views/lates/tex.blade.php`
 \SetWatermarkAngle{0}
 
 \pagestyle{fancy}
-\fancyhead{} % clear all header fields
-\renewcommand{\headrulewidth}{0pt} % no line in header area
-\fancyfoot{} % clear all footer fields
-\fancyfoot[LE,RO]{\thepage}           % page number in "outer" position of footer line
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot{}
+\fancyfoot[LE,RO]{\thepage}
 
 \fancyfoot[C]{\fontsize{8pt}{8pt}\selectfont Above document is auto-generated.}
 \renewcommand{\footrulewidth}{0.2pt}
@@ -98,7 +94,7 @@ Create a view files inside `resources/views/lates/tex.blade.php`
 \end{document}
 ~~~
 
-You can see how we have easily used blade directives to dynamically generate the content.
+You can see how we have easily used blade directives for {{ $name }} or @foreach to show addresses in table to dynamically generate the content.
 
 3. Generate the file : 
 
@@ -130,7 +126,7 @@ class TextController extends Controller
                 '20 Pumpkin Hill Drive Satellite Beach, FL 32937',
                 '7408 South San Juan Ave. Beaver Falls, PA 15010'
             ]
-        ])->download();
+        ])->download('test.pdf');
     }
 }
 ~~~

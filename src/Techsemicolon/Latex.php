@@ -89,16 +89,23 @@ class Latex
 
     /**
      * Download file as a response
-     * 
+     *
+     * @param  string|null $filename
      * @return Illuminate\Http\Response
      */
-    public function download()
+    public function download($filename = null)
     {	
     	$this->render();
 
     	$pdfPath = $this->generate();
 
-    	return \Response::file($pdfPath);
+        if(!$fileName){
+            $fileName = basename($pdfPath);
+        }
+
+    	return \Response::download($pdfPath, $fileName, [
+              'Content-Type' => 'application/pdf',
+        ]);
     }
 
     /**
