@@ -89,10 +89,10 @@ class Latex
     /**
      * Download file as a response
      *
-     * @param  string|null $filename
+     * @param  string|null $fileName
      * @return Illuminate\Http\Response
      */
-    public function download($filename = null)
+    public function download($fileName = null)
     {	
     	$this->render();
 
