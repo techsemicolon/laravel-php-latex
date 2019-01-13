@@ -18,10 +18,5 @@
         "psr-4": {
             "Techsemicolon\\": "src/"
         }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev": "1.0.0"
-        }
     }
 }
