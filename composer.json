@@ -8,7 +8,7 @@
             "email": "techsemicolon@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "dev-master",
     "require": {
         "php": ">=5.4.0",
         "illuminate/support": "5.0.x|5.1.x|5.2.x|5.3.x|5.4.x|5.5.X|5.6.X|5.7.X",
@@ -17,6 +17,11 @@
     "autoload": {
         "psr-4": {
             "Techsemicolon\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.0"
         }
     }
 }
