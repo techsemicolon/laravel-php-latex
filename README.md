@@ -80,7 +80,7 @@ Create a view files inside `resources/views/lates/tex.blade.php`
 	\renewcommand{\arraystretch}{1.5}
 	{{ $key }} & {{ $$address }} \\
 	\hline
-@endfoeach
+@endforeach
 
 \end{tabular}
 \end{adjustbox}
