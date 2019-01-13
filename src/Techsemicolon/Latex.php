@@ -3,6 +3,7 @@
 namespace Techsemicolon;
 
 use Techsemicolon\LatextException;
+use Techsemicolon\ViewNotFoundException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -56,8 +57,14 @@ class Latex
      * Render the stub with data
      * 
      * @return string
+     * @throws ViewNotFoundException
      */
     public function render(){
+
+        if(!view()->exists($this->stubPath)){
+            
+            throw new ViewNotFoundException('View ' . $this->stubPath . ' not found.');
+        }
 
     	$this->renderedTex = view($this->stubPath, $this->data)->render();
 
