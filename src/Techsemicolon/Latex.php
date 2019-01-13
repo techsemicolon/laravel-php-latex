@@ -147,10 +147,10 @@ class Latex
 
     	if(!\File::exists($logFile)){
 
-    		throw new \LatextException($process->getOutput());
+    		throw new LatextException($process->getOutput());
     	}
 
     	$error = \File::get($tmpfname.'.log');
-    	throw new \LatextException($error);
+    	throw new LatextException($error);
     }
 }

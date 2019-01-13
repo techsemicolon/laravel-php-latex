@@ -37,11 +37,6 @@ Create a view files inside `resources/views/lates/tex.blade.php`
 
 \renewcommand{\familydefault}{\sfdefault}
 
-\SetWatermarkText{Confidential}
-\SetWatermarkScale{0.3}
-\SetWatermarkColor[gray]{0.9}
-\SetWatermarkAngle{0}
-
 \pagestyle{fancy}
 \fancyhead{}
 \renewcommand{\headrulewidth}{0pt}
@@ -57,8 +52,8 @@ Create a view files inside `resources/views/lates/tex.blade.php`
 \section*{\centering{Test Document}}
 
 \begin{center}
-	\item[Name :] {{ $name }}
-	\item[Date of Birth :] {{ $dob }}
+    \item[Name :] {{ $name }}
+    \item[Date of Birth :] {{ $dob }}
 \end{center}
 
 \blindtext
@@ -77,9 +72,11 @@ Create a view files inside `resources/views/lates/tex.blade.php`
 \hline
 
 @foreach($addresses as $key => $address)
-	\renewcommand{\arraystretch}{1.5}
-	{{ $key }} & {{ $$address }} \\
-	\hline
+
+    \renewcommand{\arraystretch}{1.5}
+    {{ $key }} & {{ $address }} \\
+    \hline
+
 @endforeach
 
 \end{tabular}
