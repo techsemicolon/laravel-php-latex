@@ -4,7 +4,6 @@ namespace Techsemicolon;
 
 use Techsemicolon\LatextException;
 use Techsemicolon\ViewNotFoundException;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 class Latex

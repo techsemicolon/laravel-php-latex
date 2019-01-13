@@ -10,15 +10,16 @@ This package makes entire scaffolding using which you can generate, save or down
 
 You need to have `texlive-full` program installed on your server. This program has tex packages and language libraries which help you generate documents.
 
-- Usage :
 
-1. Install the package using : 
+## Installation : 
 
 ~~~bash
 composer require techsemicolon/laravel-php-latex
 ~~~
 
-2. Create a view file with tex data : 
+## Ssage : 
+
+- Create a view file with tex data : 
 
 Create a view files inside `resources/views/lates/tex.blade.php`
 
@@ -96,9 +97,9 @@ Create a view files inside `resources/views/lates/tex.blade.php`
 
 You can see how we have easily used blade directives for {{ $name }} or @foreach to show addresses in table to dynamically generate the content.
 
-3. Generate the file : 
+-  Generate the file : 
 
-There are 3 actions you can take to generate. 
+There are few actions you can choose take to generate. 
 
 1. You can download the file as a response :
 
@@ -144,7 +145,7 @@ class TextController extends Controller
 ])->savePdf(storage_path('exports/pdf/test.pdf'));
 ~~~
 
-3. You can just render the tex without generating :
+3. You can just render the tex without generating a pdf :
 
 ~~~php
 $tex = new Latex('latex.tex'))->with([
@@ -157,5 +158,14 @@ $tex = new Latex('latex.tex'))->with([
 ])->render();
 ~~~
 
+## Error Handling :
 
+We are using `pdflatex` program from `texlive` to generate pdfs. If error a syntax occures in your tex file, it logs into a log file. Or it is turned off, it shows output in console.
 
+The package takes care of the same internally and throws much `ViewNotFoundException`. The exception will have entire information about the error easily available for you to debug.
+
+Please feel free to contribute if you want to add new functionalities to this package.
+
+- License : 
+
+This DOMPDF Wrapper for Laravel is open-sourced software licensed under the MIT license
