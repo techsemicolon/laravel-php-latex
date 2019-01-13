@@ -1,0 +1,22 @@
+{
+    "name": "techsemicolon/laravel-php-latex",
+    "description": "A latex package for laravel to generate pdfs",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mihir Bhende",
+            "email": "techsemicolon@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "5.0.x|5.1.x|5.2.x|5.3.x|5.4.x|5.5.X|5.6.X|5.7.X",
+        "illuminate/filesystem": "5.0.x|5.1.x|5.2.x|5.3.x|5.4.x|5.5.X|5.6.X|5.7.X"
+    },
+    "autoload": {
+        "psr-4": {
+            "Techsemicolon\\": "src/"
+        }
+    }
+}
