@@ -2,7 +2,6 @@
 
 <p align="center">
     <img alt="Laravel" src="laravel-logo.png" width="250">
-    +
     <img alt="LaTex" src="latex-logo.svg" width="250">
 </p>
 
