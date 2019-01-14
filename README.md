@@ -1,4 +1,4 @@
-# laravel-php-latex
+# A laravel package to generate pdfs using latex
 
 LaTex is an extraordinary typesetting system, using which you can highly professional and clean documentation. The document can be a simple article or huge technical/scientific book.
 
