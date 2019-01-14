@@ -197,6 +197,26 @@ $tex = new Latex('latex.tex'))->with([
     ]
 ])->render();
 ~~~
+## Setting up custom bin path : 
+
+If your server is not having `pdflatex` in the environment `$PATH`, you might need to give full path to execute the command. To find the path you can do :
+
+~~~bash
+which pdflatex
+~~~
+
+Then you can pass that path using `binPath` function as below : 
+
+~~~php
+return (new Latex('latex.tex'))->with([
+    'name' => 'John Doe',
+    'dob' => '01/01/1994',
+    'addresses' => [
+        '20 Pumpkin Hill Drive Satellite Beach, FL 32937',
+        '7408 South San Juan Ave. Beaver Falls, PA 15010'
+    ]
+])->binPath('/usr/bin/pdflatex')->download('test.pdf');
+~~~
 
 ## Using Raw Tex : 
 

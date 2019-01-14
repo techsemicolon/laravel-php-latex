@@ -43,6 +43,13 @@ class Latex
     private $metadata;
 
     /**
+     * Path of psdlatex
+     * 
+     * @var string
+     */
+    private $binPath;
+
+    /**
      * Construct the instance
      * 
      * @param string $stubPath
@@ -62,6 +69,23 @@ class Latex
         
         $this->metadata = $metadata;
 
+    }
+
+    /**
+     * Set the path of pdflatex
+     * 
+     * @param  string $binPath
+     * 
+     * @return void
+     */
+    public function binPath($binPath){
+
+        if(is_string($binPath)){
+
+            $this->binPath = $binPath;
+        }
+
+        return $this;
     }
 
     /**
@@ -177,7 +201,10 @@ class Latex
 
         \File::put($tmpfname, $this->renderedTex);
 
-        $process = new Process("pdflatex -output-directory $tmpDir $tmpfname");
+        $program    = $this->binPath ?? 'pdflatex';
+        $cmd        = "$program -output-directory $tmpDir $tmpfname"
+        
+        $process    = new Process($cmd);
         $process->run();
 
         if (!$process->isSuccessful()) {
