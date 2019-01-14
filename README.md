@@ -6,7 +6,7 @@ The reason to choose latex is that, it has extensive features inbuilt have heade
 
 This package makes entire scaffolding using which you can generate, save or download PDF documents.
 
-- Pre-requisites : 
+## Pre-requisites : 
 
 You need to have `texlive-full` program installed on your server. This program has tex packages and language libraries which help you generate documents.
 
