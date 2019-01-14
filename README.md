@@ -1,8 +1,14 @@
 # A laravel package to generate pdfs using latex
 
+<p align="center">
+    <img alt="Laravel" src="laravel-logo.png" width="250">
+    +
+    <img alt="LaTex" src="latex-logo.svg" width="250">
+</p>
+
 LaTex is an extraordinary typesetting system, using which you can highly professional and clean documentation. The document can be a simple article or huge technical/scientific book.
 
-The reason to choose latex is that, it has extensive features inbuilt have headers, footers, book index, page numbers, watermarks and so on... Once you explore the possibilities of a latex document, you would be amazed.
+The reason to choose LaTex is that, it has extensive features inbuilt have headers, footers, book index, page numbers, watermarks and so on... Once you explore the possibilities of a LaTex document, you would be amazed.
 
 This package makes entire scaffolding using which you can generate, save or download PDF documents.
 
@@ -149,7 +155,7 @@ use Techsemicolon\Latex;
 class TestController extends Controller
 {
     /**
-     * Download PDF generated from latex
+     * Download PDF generated from LaTex
      * 
      * @return Illuminate\Http\Response
      */
