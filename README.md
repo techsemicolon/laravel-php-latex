@@ -17,7 +17,33 @@ You need to have `texlive-full` program installed on your server. This program h
 composer require techsemicolon/laravel-php-latex
 ~~~
 
-## Ssage : 
+## Dry Run : 
+
+Before diving into the usage directly, it is important to make sure required programms are installed properly on yoru server. The package comes with dryrun method which you can use in put inside any controller or route. It will automatically generate `dryrun.pdf` if everything is set up prperly on the server. If not, it will throw `LatexException` with detailed server errors.
+
+~~~php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Techsemicolon\Latex;
+
+class TestController extends Controller
+{
+    /**
+     * Download PDF generated from latex
+     * 
+     * @return Illuminate\Http\Response
+     */
+    public function download(){
+
+        return (new Latex)->dryRun();
+    }
+}
+~~~
+
+## Usage : 
 
 - Create a view file with tex data : 
 
@@ -81,7 +107,7 @@ Create a view files inside `resources/views/lates/tex.blade.php`
 
 \end{tabular}
 \end{adjustbox}
-\caption{Claim Summmary}
+\caption{Address Summmary}
 \end{table}
 
 \blindtext
@@ -108,7 +134,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Techsemicolon\Latex;
 
-class TextController extends Controller
+class TestController extends Controller
 {
     /**
      * Download PDF generated from latex
@@ -153,6 +179,24 @@ $tex = new Latex('latex.tex'))->with([
         '7408 South San Juan Ave. Beaver Falls, PA 15010'
     ]
 ])->render();
+~~~
+
+## Using Raw Tex : 
+
+If you do not want to use views as tex files, but already have tex content. Or are using other libraries to generate tex content like [Markdown-to-LaTex](https://github.com/cebe/markdown-latex), you can use `RawTex` class instead of passing a view path : 
+
+~~~php 
+$tex = new RawTex('your_raw_tex_content_string.....');
+
+return (new Latex($tex))->with([
+    'name' => 'John Doe',
+    'dob' => '01/01/1994',
+    'addresses' => [
+        '20 Pumpkin Hill Drive Satellite Beach, FL 32937',
+        '7408 South San Juan Ave. Beaver Falls, PA 15010'
+    ]
+])->download('test.pdf');
+
 ~~~
 
 ## Error Handling :

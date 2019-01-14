@@ -29,13 +29,28 @@ class Latex
     private $renderedTex;
 
     /**
+     * If it's a raw tex or a view file
+     * @var boolean
+     */
+    private $isRaw = false;
+
+    /**
      * Construct the instance
      * 
      * @param string $stubPath
      */
-    public function __construct($stubPath){
+    public function __construct($stubPath = null){
 
-    	$this->stubPath = $stubPath;
+        if($stubPath instanceof RawTex){
+
+            $this->isRaw = true;
+            $this->renderedTex = $stubPath->getTex();
+        }
+        else{
+
+           $this->stubPath = $stubPath;
+        }
+
     }
 
     /**
@@ -50,6 +65,27 @@ class Latex
     	$this->data = $data;
 
     	return $this;
+    }
+
+    /**
+     * Dry run
+     * 
+     * @return Illuminate\Http\Response
+     */
+    public function dryRun(){
+
+        // $process = new Process("pdflatex $tmpfname");
+        $process = new Process("which pdflatex");
+        $process->run();
+
+        // executes after the command finishes
+        if (!$process->isSuccessful()) {
+            
+            throw new LatextException($process->getOutput());
+        }
+
+        $this->renderedTex = \File::get('./dryrun.tex');
+        $this->download('dryrun.pdf');
     }
 
     /**
@@ -94,7 +130,9 @@ class Latex
      */
     public function download($fileName = null)
     {	
-    	$this->render();
+    	if(!$this->isRaw){
+           $this->render();
+        }
 
     	$pdfPath = $this->generate();
 
