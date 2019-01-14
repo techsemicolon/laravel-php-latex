@@ -3,6 +3,7 @@
 namespace Techsemicolon;
 
 use Techsemicolon\LatextException;
+use Techsemicolon\LatexPdfWasGenerated;
 use Techsemicolon\ViewNotFoundException;
 use Symfony\Component\Process\Process;
 
@@ -74,17 +75,17 @@ class Latex
      */
     public function dryRun(){
 
-        // $process = new Process("pdflatex $tmpfname");
+        $this->isRaw = true;
+
         $process = new Process("which pdflatex");
         $process->run();
 
-        // executes after the command finishes
         if (!$process->isSuccessful()) {
             
             throw new LatextException($process->getOutput());
         }
 
-        $this->renderedTex = \File::get('./dryrun.tex');
+        $this->renderedTex = \File::get(dirname(__FILE__).'/dryrun.tex');
         $this->download('dryrun.pdf');
     }
 
@@ -115,11 +116,15 @@ class Latex
      */
     public function savePdf($location)
     {
-    	$this->render();
+        $this->render();
 
-    	$pdfPath = $this->generate();
+        $pdfPath = $this->generate();
 
-    	return \File::move($pdfPath, $location);
+        $fileMoved = \File::move($pdfPath, $location);
+
+        \Event::fire(new LatexPdfWasGenerated($location, 'savepdf'));
+
+        return $fileMoved;
     }
 
     /**
@@ -129,18 +134,20 @@ class Latex
      * @return Illuminate\Http\Response
      */
     public function download($fileName = null)
-    {	
-    	if(!$this->isRaw){
+    {
+        if(!$this->isRaw){
            $this->render();
         }
 
-    	$pdfPath = $this->generate();
+        $pdfPath = $this->generate();
 
         if(!$fileName){
             $fileName = basename($pdfPath);
         }
 
-    	return \Response::download($pdfPath, $fileName, [
+        \Event::fire(new LatexPdfWasGenerated($fileName, 'download'));
+
+        return \Response::download($pdfPath, $fileName, [
               'Content-Type' => 'application/pdf',
         ]);
     }
