@@ -96,7 +96,8 @@ class Latex
         }
 
         $this->renderedTex = \File::get(dirname(__FILE__).'/dryrun.tex');
-        $this->download('dryrun.pdf');
+        
+        return $this->download('dryrun.pdf');
     }
 
     /**
