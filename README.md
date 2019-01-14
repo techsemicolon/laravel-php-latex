@@ -43,6 +43,12 @@ class TestController extends Controller
 }
 ~~~
 
+Dryrun will download a beautifully clean test pdf like below : 
+
+<p align="center">
+    <img alt="dryrun.pdf sample" src="dryrun.png" width="450">
+</p>
+
 ## Usage : 
 
 - Create a view file with tex data : 
@@ -199,6 +205,73 @@ return (new Latex($tex))->with([
 
 ~~~
 
+## Listening to events : 
+
+Whenever a pdf is succesfully generated, it fires an event `LatexPdfWasGenerated`. Similarly whenever if pdf generation fails, it fires event `LatexPdfFailed`.
+
+These events are important if you need to perform some actions depending on the generation stutus like updating the database. But mostly these pdf have some metadata like which user the pdf belongs to or which order the pdf belongs to. You can pass this metadata while instantiating `latex` as a second argument.
+
+This metadata is then passed back to you from the fired event, which makes it much more meaningful to listen. The metadata can be anything, if can bt string, numeric, an array, object, collection etc. You can pass the metadata depending on your desired logic.
+
+~~~php
+// $user will be our metadata in this example
+$user = Auth::user();
+
+(new Latex('latex.tex', $user))->with([
+    'name' => 'John Doe',
+    'dob' => '01/01/1994',
+    'addresses' => [
+        '20 Pumpkin Hill Drive Satellite Beach, FL 32937',
+        '7408 South San Juan Ave. Beaver Falls, PA 15010'
+    ]
+])->savePdf(storage_path('exports/pdf/test.pdf'));
+~~~
+
+Then you can define a listener like : 
+
+~~~php
+<?php
+
+namespace App\Listeners;
+
+use Techsemicolon\LatexPdfWasGenerated;
+
+class LatexPdfWasGeneratedConfirmation
+{
+    /**
+     * Create the event listener.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  LatexPdfWasGenerated  $event
+     * @return void
+     */
+    public function handle(LatexPdfWasGenerated $event)
+    {
+        // Path  of pdf in case in was saved 
+        // OR 
+        // Downloaded name of pdf file in case it was downloaded in response directly
+        $pdf = $event->pdf;
+
+        // download OR savepdf
+        $action = $event->action;
+
+        // metadata $user in this example
+        $user = $event->metadata;
+
+        // Perform desired actions
+    }
+}
+~~~
+
 ## Error Handling :
 
 We are using `pdflatex` program from `texlive` to generate pdfs. If error a syntax occures in your tex file, it logs into a log file. Or it is turned off, it shows output in console.
@@ -207,6 +280,6 @@ The package takes care of the same internally and throws much `ViewNotFoundExcep
 
 Please feel free to contribute if you want to add new functionalities to this package.
 
-- License : 
+## License : 
 
 This DOMPDF Wrapper for Laravel is open-sourced software licensed under the MIT license

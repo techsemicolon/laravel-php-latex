@@ -4,6 +4,7 @@ namespace Techsemicolon;
 
 use Techsemicolon\LatextException;
 use Techsemicolon\LatexPdfWasGenerated;
+use Techsemicolon\LatexPdfFailed;
 use Techsemicolon\ViewNotFoundException;
 use Symfony\Component\Process\Process;
 
@@ -36,11 +37,18 @@ class Latex
     private $isRaw = false;
 
     /**
+     * Metadata of the generated pdf
+     * @var mixed
+     */
+    private $metadata;
+
+    /**
      * Construct the instance
      * 
      * @param string $stubPath
+     * @param mixed $metadata
      */
-    public function __construct($stubPath = null){
+    public function __construct($stubPath = null, $metadata = null){
 
         if($stubPath instanceof RawTex){
 
@@ -51,6 +59,8 @@ class Latex
 
            $this->stubPath = $stubPath;
         }
+        
+        $this->metadata = $metadata;
 
     }
 
@@ -122,7 +132,7 @@ class Latex
 
         $fileMoved = \File::move($pdfPath, $location);
 
-        \Event::fire(new LatexPdfWasGenerated($location, 'savepdf'));
+        \Event::fire(new LatexPdfWasGenerated($location, 'savepdf', $this->metadata));
 
         return $fileMoved;
     }
@@ -145,7 +155,7 @@ class Latex
             $fileName = basename($pdfPath);
         }
 
-        \Event::fire(new LatexPdfWasGenerated($fileName, 'download'));
+        \Event::fire(new LatexPdfWasGenerated($fileName, 'download', $this->metadata));
 
         return \Response::download($pdfPath, $fileName, [
               'Content-Type' => 'application/pdf',
@@ -173,6 +183,7 @@ class Latex
         // executes after the command finishes
         if (!$process->isSuccessful()) {
         	
+            \Event::fire(new LatexPdfFailed($fileName, 'download', $this->metadata));
         	$this->parseError($tmpfname, $process);
         }
 

@@ -2,7 +2,7 @@
 
 namespace Techsemicolon;
 
-class LatexPdfWasGenerated
+class LatexPdfFailed
 {
     /**
      * Path of pdf
