@@ -202,7 +202,7 @@ class Latex
         \File::put($tmpfname, $this->renderedTex);
 
         $program    = $this->binPath ?? 'pdflatex';
-        $cmd        = "$program -output-directory $tmpDir $tmpfname"
+        $cmd        = "$program -output-directory $tmpDir $tmpfname";
         
         $process    = new Process($cmd);
         $process->run();
