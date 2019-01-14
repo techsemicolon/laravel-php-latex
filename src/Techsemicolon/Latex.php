@@ -177,16 +177,30 @@ class Latex
 
         \File::put($tmpfname, $this->renderedTex);
 
-        // $process = new Process("pdflatex $tmpfname");
         $process = new Process("pdflatex -output-directory $tmpDir $tmpfname");
         $process->run();
 
-        // executes after the command finishes
         if (!$process->isSuccessful()) {
         	
             \Event::fire(new LatexPdfFailed($fileName, 'download', $this->metadata));
         	$this->parseError($tmpfname, $process);
         }
+
+        register_shutdown_function(function () use ($tmpfname) {
+
+            if(\File::exists($tmpfname)){
+                \File::delete($tmpfname);
+            }
+            if(\File::exists($tmpfname . '.aux')){
+                \File::delete($tmpfname . '.aux');
+            }
+            if(\File::exists($tmpfname . '.log')){
+                \File::delete($tmpfname . '.log');
+            }
+            if(\File::exists($tmpfname . '.pdf')){
+                \File::delete($tmpfname . '.pdf');
+            }
+        });
 
         return $tmpfname.'.pdf';
     }
