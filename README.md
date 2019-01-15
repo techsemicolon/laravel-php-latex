@@ -236,6 +236,33 @@ return (new Latex($tex))->with([
 
 ~~~
 
+## Bulk download in a zip archive : 
+
+Want to expot multiple pdfs in zip? Package has that functionality ready for you. This gives a great flexibility for you. However, make sure you are not passing too many pdfs together, as it is going to consume good amount server memory to export those together.
+
+~~~php 
+$latexCollection = (new LatexCollection());
+$users = User::limit(10)->get();
+foreach ($users as $user) {
+            
+    $pdfName = $user->first_name.'-'.$user->last_name.'-'.$user->id.'.pdf';
+
+    // Create latex instance
+    $latex = (new Latex('latex.patientsummary'))->with([
+        'user' => $user
+    ])->setName($pdfName);
+
+    // Add it to latex collection
+    $latexCollection->add($latex);
+}
+
+// Download the zip
+return $latexCollection->downloadZip('bulk.zip');
+
+// OR you can also save it 
+$latexCollection->saveZip(storage_path('exports/zips/users.zip'));
+~~~
+
 ## Listening to events : 
 
 Whenever a pdf is succesfully generated, it fires an event `LatexPdfWasGenerated`. Similarly whenever if pdf generation fails, it fires event `LatexPdfFailed`.
