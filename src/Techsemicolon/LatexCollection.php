@@ -144,7 +144,8 @@ class LatexCollection
 
         foreach ($this->collection as $latex) {
             
-            $pdf = $this->collectionDir . DIRECTORY_SEPARATOR . str_random(4) . '.pdf';
+            $name = $latex->getName() ? $latex->getName() : str_random(4) . '.pdf';
+            $pdf = $this->collectionDir . DIRECTORY_SEPARATOR . $name;
             $latex->savePdf($pdf);
 
             $this->pdfCollection[] = $pdf;

@@ -50,6 +50,13 @@ class Latex
     private $binPath;
 
     /**
+     * File Name inside Zip
+     * 
+     * @var string
+     */
+    private $nameInsideZip;
+
+    /**
      * Construct the instance
      * 
      * @param string $stubPath
@@ -86,6 +93,33 @@ class Latex
         }
 
         return $this;
+    }
+
+    /**
+     * Set name inside zip file
+     * 
+     * @param  string $nameInsideZip
+     * 
+     * @return void
+     */
+    public function setName($nameInsideZip){
+
+        if(is_string($nameInsideZip)){
+
+            $this->nameInsideZip = basename($nameInsideZip);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get name inside zip file
+     * 
+     * @return string
+     */
+    public function getName(){
+
+        return $this->nameInsideZip;
     }
 
     /**
@@ -206,7 +240,7 @@ class Latex
 
         \File::put($tmpfname, $this->renderedTex);
 
-        $program    = $this->binPath ?? 'pdflatex';
+        $program    = $this->binPath ? $this->binPath : 'pdflatex';
         $cmd        = "$program -output-directory $tmpDir $tmpfname";
         
         $process    = new Process($cmd);
