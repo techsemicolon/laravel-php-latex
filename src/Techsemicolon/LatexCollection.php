@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Techsemicolon;
 
 use Symfony\Component\Process\Process;
 use Techsemicolon\Latex;
@@ -165,6 +165,13 @@ class LatexCollection
         $this->collectionDir = $tmpDir . DIRECTORY_SEPARATOR .'texcollection'.str_random(10);
 
         \File::makeDirectory($this->collectionDir, 0755, true, true);
+
+        register_shutdown_function(function(){
+
+            if(\File::exists($this->collectionDir)){
+                \File::deleteDirectory($this->collectionDir);
+            }
+        });
 
         return $this;
     }
