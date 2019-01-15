@@ -43,7 +43,7 @@ class Latex
     private $metadata;
 
     /**
-     * Path of psdlatex
+     * Path of pdflatex
      * 
      * @var string
      */
@@ -131,6 +131,11 @@ class Latex
      * @throws ViewNotFoundException
      */
     public function render(){
+
+        if($this->renderedTex){
+            
+           return $this->renderedTex;
+        }
 
         if(!view()->exists($this->stubPath)){
             
