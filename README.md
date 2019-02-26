@@ -346,4 +346,4 @@ Please feel free to contribute if you want to add new functionalities to this pa
 
 ## License : 
 
-This DOMPDF Wrapper for Laravel is open-sourced software licensed under the MIT license
+This psckage is open-sourced software licensed under the MIT license
