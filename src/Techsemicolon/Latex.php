@@ -252,23 +252,38 @@ class Latex
         	$this->parseError($tmpfname, $process);
         }
 
+        $this->teardown($tmpfname);
+
         register_shutdown_function(function () use ($tmpfname) {
 
-            if(\File::exists($tmpfname)){
-                \File::delete($tmpfname);
-            }
-            if(\File::exists($tmpfname . '.aux')){
-                \File::delete($tmpfname . '.aux');
-            }
-            if(\File::exists($tmpfname . '.log')){
-                \File::delete($tmpfname . '.log');
-            }
             if(\File::exists($tmpfname . '.pdf')){
                 \File::delete($tmpfname . '.pdf');
             }
         });
 
         return $tmpfname.'.pdf';
+    }
+
+    /**
+     * Teardown secondary files
+     * 
+     * @param  string $tmpfname
+     * 
+     * @return void
+     */
+    private function teardown($tmpfname)
+    {
+        if(\File::exists($tmpfname)){
+            \File::delete($tmpfname);
+        }
+        if(\File::exists($tmpfname . '.aux')){
+            \File::delete($tmpfname . '.aux');
+        }
+        if(\File::exists($tmpfname . '.log')){
+            \File::delete($tmpfname . '.log');
+        }
+
+        return $this;
     }
 
     /**
