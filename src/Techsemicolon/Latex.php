@@ -196,7 +196,7 @@ class Latex
 
         $fileMoved = \File::move($pdfPath, $location);
 
-        \Event::fire(new LatexPdfWasGenerated($location, 'savepdf', $this->metadata));
+        \Event::dispatch(new LatexPdfWasGenerated($location, 'savepdf', $this->metadata));
 
         return $fileMoved;
     }
@@ -219,7 +219,7 @@ class Latex
             $fileName = basename($pdfPath);
         }
 
-        \Event::fire(new LatexPdfWasGenerated($fileName, 'download', $this->metadata));
+        \Event::dispatch(new LatexPdfWasGenerated($fileName, 'download', $this->metadata));
 
         return \Response::download($pdfPath, $fileName, [
               'Content-Type' => 'application/pdf',
@@ -248,7 +248,7 @@ class Latex
 
         if (!$process->isSuccessful()) {
         	
-            \Event::fire(new LatexPdfFailed($fileName, 'download', $this->metadata));
+            \Event::dispatch(new LatexPdfFailed($fileName, 'download', $this->metadata));
         	$this->parseError($tmpfname, $process);
         }
 
