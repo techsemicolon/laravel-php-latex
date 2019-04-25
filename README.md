@@ -64,7 +64,7 @@ Dryrun will download a beautifully clean test pdf like below :
 
 - Create a view file with tex data : 
 
-Create a view files inside `resources/views/lates/tex.blade.php`
+Create a view files inside `resources/views/latex/tex.blade.php`
 
 ~~~tex
 \documentclass[a4paper,9pt,landscape]{article}
