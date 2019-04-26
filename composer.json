@@ -11,8 +11,8 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "5.0.x|5.1.x|5.2.x|5.3.x|5.4.x|5.5.X|5.6.X|5.7.X|5.8.X",
-        "illuminate/filesystem": "5.0.x|5.1.x|5.2.x|5.3.x|5.4.x|5.5.X|5.6.X|5.7.X|5.8.X",
+        "illuminate/support": "5.4.x|5.5.X|5.6.X|5.7.X|5.8.X",
+        "illuminate/filesystem": "5.4.x|5.5.X|5.6.X|5.7.X|5.8.X",
         "symfony/process": "v2.x|v3.x|v4.x"
     },
     "autoload": {
