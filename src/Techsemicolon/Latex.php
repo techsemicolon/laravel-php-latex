@@ -83,7 +83,7 @@ class Latex
      * 
      * @param  string $binPath
      * 
-     * @return void
+     * @return Latex
      */
     public function binPath($binPath){
 
@@ -100,7 +100,7 @@ class Latex
      * 
      * @param  string $nameInsideZip
      * 
-     * @return void
+     * @return Latex
      */
     public function setName($nameInsideZip){
 
@@ -127,7 +127,7 @@ class Latex
      * 
      * @param  array $data
      * 
-     * @return void
+     * @return Latex
      */
     public function with($data){
 
