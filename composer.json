@@ -10,10 +10,10 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.4.0",
-        "illuminate/support": "5.4.x|5.5.X|5.6.X|5.7.X|5.8.X|6.x",
-        "illuminate/filesystem": "5.4.x|5.5.X|5.6.X|5.7.X|5.8.X|6.x",
-        "symfony/process": "^2.0"
+        "php": "^7.3",
+        "illuminate/support": "^6.0",
+        "illuminate/filesystem": "^6.0",
+        "symfony/process": "^4.3.4"
     },
     "autoload": {
         "psr-4": {
