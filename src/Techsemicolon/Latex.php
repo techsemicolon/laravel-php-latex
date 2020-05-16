@@ -145,7 +145,7 @@ class Latex
 
         $this->isRaw = true;
 
-        $process = new Process("which pdflatex");
+        $process = new Process(["which", "pdflatex"]);
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -241,7 +241,7 @@ class Latex
         \File::put($tmpfname, $this->renderedTex);
 
         $program    = $this->binPath ? $this->binPath : 'pdflatex';
-        $cmd        = "$program -output-directory $tmpDir $tmpfname";
+        $cmd        = [$program, "-output-directory", $tmpDir, $tmpfname];
         
         $process    = new Process($cmd);
         $process->run();
