@@ -2,7 +2,6 @@
 
 namespace Techsemicolon;
 
-use Symfony\Component\Process\Process;
 use Techsemicolon\Latex;
 use Techsemicolon\LatextEmptyCollectionException;
 use Techsemicolon\LatextException;

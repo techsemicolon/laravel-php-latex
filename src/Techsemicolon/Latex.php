@@ -83,7 +83,7 @@ class Latex
      * 
      * @param  string $binPath
      * 
-     * @return void
+     * @return Latex
      */
     public function binPath($binPath){
 
@@ -100,7 +100,7 @@ class Latex
      * 
      * @param  string $nameInsideZip
      * 
-     * @return void
+     * @return Latex
      */
     public function setName($nameInsideZip){
 
@@ -127,7 +127,7 @@ class Latex
      * 
      * @param  array $data
      * 
-     * @return void
+     * @return Latex
      */
     public function with($data){
 
@@ -145,7 +145,7 @@ class Latex
 
         $this->isRaw = true;
 
-        $process = new Process("which pdflatex");
+        $process = new Process(["which", "pdflatex"]);
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -196,7 +196,7 @@ class Latex
 
         $fileMoved = \File::move($pdfPath, $location);
 
-        \Event::fire(new LatexPdfWasGenerated($location, 'savepdf', $this->metadata));
+        \Event::dispatch(new LatexPdfWasGenerated($location, 'savepdf', $this->metadata));
 
         return $fileMoved;
     }
@@ -219,7 +219,7 @@ class Latex
             $fileName = basename($pdfPath);
         }
 
-        \Event::fire(new LatexPdfWasGenerated($fileName, 'download', $this->metadata));
+        \Event::dispatch(new LatexPdfWasGenerated($fileName, 'download', $this->metadata));
 
         return \Response::download($pdfPath, $fileName, [
               'Content-Type' => 'application/pdf',
@@ -241,14 +241,14 @@ class Latex
         \File::put($tmpfname, $this->renderedTex);
 
         $program    = $this->binPath ? $this->binPath : 'pdflatex';
-        $cmd        = "$program -output-directory $tmpDir $tmpfname";
+        $cmd        = [$program, "-output-directory", $tmpDir, $tmpfname];
         
         $process    = new Process($cmd);
         $process->run();
 
         if (!$process->isSuccessful()) {
         	
-            \Event::fire(new LatexPdfFailed($fileName, 'download', $this->metadata));
+            \Event::dispatch(new LatexPdfFailed($fileName, 'download', $this->metadata));
         	$this->parseError($tmpfname, $process);
         }
 
